@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arena Roja - Accesorios</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-top">
+            <div class="logo-container">
+                <h1 class="logo">🔴 Arena Roja</h1>
+            </div>
+            <div class="header-icons">
+                <button class="icon-btn" id="cartCount">
+                    🛒 <span id="cartBadge">0</span>
+                </button>
+                <button class="icon-btn" id="adminBtn">👤 Admin</button>
+            </div>
+        </div>
+        
+        <!-- NAVIGATION -->
+        <nav class="navbar">
+            <ul class="nav-menu">
+                <li><a href="#inicio" class="nav-link">Inicio</a></li>
+                <li><a href="#catalogo" class="nav-link">Catálogo</a></li>
+                <li><a href="#carrito" class="nav-link">Carrito</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <!-- INICIO SECTION -->
+        <section id="inicio" class="section hero">
+            <div class="hero-content">
+                <h2>Bienvenido a Arena Roja</h2>
+                <p>Descubre nuestra exclusiva colección de accesorios femeninos</p>
+                <button class="btn btn-primary" onclick="scrollToSection('catalogo')">Ver Catálogo</button>
+            </div>
+        </section>
+
+        <!-- CATÁLOGO DE PRODUCTOS -->
+        <section id="catalogo" class="section">
+            <h2 class="section-title">Catálogo de Productos</h2>
+            <div class="filters">
+                <input type="text" id="searchInput" placeholder="Buscar productos..." class="search-box">
+                <select id="filterPrice" class="filter-select">
+                    <option value="">Ordenar por precio</option>
+                    <option value="asc">Menor a mayor</option>
+                    <option value="desc">Mayor a menor</option>
+                </select>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Los productos se cargan aquí con JavaScript -->
+            </div>
+        </section>
+
+        <!-- CARRITO DE COMPRAS -->
+        <section id="carrito" class="section cart-section">
+            <h2 class="section-title">Carrito de Compras</h2>
+            <div class="cart-container">
+                <div class="cart-items" id="cartItems">
+                    <p class="empty-cart">El carrito está vacío</p>
+                </div>
+                <div class="cart-summary">
+                    <h3>Resumen del Carrito</h3>
+                    <p>Subtotal: <span id="subtotal">$0.00</span></p>
+                    <p>IVA (16%): <span id="tax">$0.00</span></p>
+                    <hr>
+                    <h4>Total: <span id="total">$0.00</span></h4>
+                    <button class="btn btn-primary" id="checkoutBtn" onclick="goToCheckout()">Proceder al Pago</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FORMULARIO DE COMPRA -->
+        <section id="checkout" class="section checkout-section" style="display:none;">
+            <h2 class="section-title">Formulario de Compra</h2>
+            <form id="checkoutForm" class="checkout-form">
+                <div class="form-group">
+                    <label for="name">Nombre Completo *</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Teléfono *</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Dirección *</label>
+                    <textarea id="address" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="paymentMethod">Método de Pago *</label>
+                    <select id="paymentMethod" required>
+                        <option value="">Seleccionar método</option>
+                        <option value="transferencia">Transferencia Bancaria</option>
+                        <option value="movil">Pago Móvil</option>
+                    </select>
+                </div>
+                <div class="form-group" id="bankDetails" style="display:none;">
+                    <p><strong>Datos Bancarios:</strong></p>
+                    <p>Banco: BanColdex</p>
+                    <p>Cuenta: 12345678901</p>
+                    <p>A Nombre de: Arena Roja</p>
+                </div>
+                <button type="submit" class="btn btn-primary">Completar Compra</button>
+                <button type="button" class="btn btn-secondary" onclick="goBackToCart()">Volver al Carrito</button>
+            </form>
+        </section>
+
+        <!-- CONFIRMACIÓN DE PEDIDO -->
+        <section id="orderConfirmation" class="section" style="display:none;">
+            <div class="confirmation-card">
+                <h2>✓ Compra Exitosa</h2>
+                <p>Gracias por tu compra en Arena Roja</p>
+                <div class="order-details">
+                    <p><strong>Número de Orden:</strong> <span id="orderNumber"></span></p>
+                    <p><strong>Nombre:</strong> <span id="orderName"></span></p>
+                    <p><strong>Email:</strong> <span id="orderEmail"></span></p>
+                    <p><strong>Total:</strong> <span id="orderTotal"></span></p>
+                    <p><strong>Fecha:</strong> <span id="orderDate"></span></p>
+                </div>
+                <p class="confirmation-message">Te enviaremos un correo con los detalles de tu compra y seguimiento del envío.</p>
+                <button class="btn btn-primary" onclick="goHome()">Volver al Inicio</button>
+            </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section id="faq" class="section">
+            <h2 class="section-title">Preguntas Frecuentes</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <h3>¿Cuál es el tiempo de entrega?</h3>
+                    <p>El tiempo de entrega es de 3 a 5 días hábiles después de confirmada la compra.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>¿Puedo devolver un producto?</h3>
+                    <p>Sí, puedes devolver productos dentro de 7 días después de recibirlos en perfecto estado.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>¿Cuáles son los métodos de pago?</h3>
+                    <p>Aceptamos Transferencia Bancaria y Pago Móvil. Pronto agregaremos más opciones.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>¿Hay descuentos por compra en cantidad?</h3>
+                    <p>Sí, disponemos de descuentos especiales. Contáctanos para más información.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHATBOT -->
+        <section id="chatbot-section" class="chatbot-section">
+            <div class="chatbot-widget">
+                <div class="chatbot-header" onclick="toggleChatbot()">
+                    💬 Asistente Arena Roja
+                </div>
+                <div class="chatbot-body" id="chatbotBody" style="display:none;">
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-input">
+                        <input type="text" id="userMessage" placeholder="Escribe tu pregunta...">
+                        <button onclick="sendMessage()">Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contacto" class="section">
+            <h2 class="section-title">Contacto</h2>
+            <div class="contact-container">
+                <div class="contact-card">
+                    <h3>📱 WhatsApp</h3>
+                    <p>Escríbenos directamente</p>
+                    <a href="https://wa.me/1234567890" target="_blank" class="btn btn-primary">Ir a WhatsApp</a>
+                </div>
+                <div class="contact-card">
+                    <h3>📷 Instagram</h3>
+                    <p>Sigue nuestras colecciones</p>
+                    <a href="https://instagram.com" target="_blank" class="btn btn-primary">Ir a Instagram</a>
+                </div>
+                <div class="contact-card">
+                    <h3>🎵 TikTok</h3>
+                    <p>Mira nuestros videos</p>
+                    <a href="https://tiktok.com" target="_blank" class="btn btn-primary">Ir a TikTok</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL ADMIN -->
+    <div id="adminModal" class="modal" style="display:none;">
+        <div class="modal-content admin-modal">
+            <span class="close" onclick="closeModal('adminModal')">&times;</span>
+            <div class="admin-tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">Iniciar Sesión</button>
+                <button class="tab-btn" id="adminTabBtn" style="display:none;" onclick="switchTab('panel')">Panel Admin</button>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <div id="loginTab" class="admin-tab active">
+                <h2>Acceso Administrador</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="adminUser">Usuario</label>
+                        <input type="text" id="adminUser" placeholder="admin">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPassword">Contraseña</label>
+                        <input type="password" id="adminPassword" placeholder="admin123">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ingresar</button>
+                </form>
+                <p class="admin-hint">Usuario: admin | Contraseña: admin123</p>
+            </div>
+
+            <!-- ADMIN PANEL -->
+            <div id="panelTab" class="admin-tab" style="display:none;">
+                <h2>Panel de Administración</h2>
+                <div class="admin-buttons">
+                    <button class="btn btn-secondary" onclick="switchAdminTab('products')">Gestionar Productos</button>
+                    <button class="btn btn-secondary" onclick="switchAdminTab('orders')">Ver Pedidos</button>
+                    <button class="btn btn-secondary" onclick="logoutAdmin()">Cerrar Sesión</button>
+                </div>
+
+                <!-- MANAGE PRODUCTS -->
+                <div id="productsTab" class="admin-section">
+                    <h3>Agregar Nuevo Producto</h3>
+                    <form id="productForm">
+                        <div class="form-group">
+                            <label for="productName">Nombre</label>
+                            <input type="text" id="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productDesc">Descripción</label>
+                            <textarea id="productDesc" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="productPrice">Precio</label>
+                            <input type="number" id="productPrice" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productImage">URL de Imagen</label>
+                            <input type="text" id="productImage" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productStatus">Estado</label>
+                            <select id="productStatus">
+                                <option value="disponible">Disponible</option>
+                                <option value="agotado">Agotado</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Agregar Producto</button>
+                    </form>
+
+                    <h3>Productos Existentes</h3>
+                    <div id="adminProductsList"></div>
+                </div>
+
+                <!-- ORDERS LIST -->
+                <div id="ordersTab" class="admin-section" style="display:none;">
+                    <h3>Pedidos Realizados</h3>
+                    <div id="ordersList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUCTDETAIL MODAL -->
+    <div id="productModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('productModal')">&times;</span>
+            <div id="productDetails"></div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Arena Roja</h4>
+                <p>Accesorios femeninos de calidad</p>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces</h4>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#catalogo">Catálogo</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div class="social-links">
+                    <a href="https://instagram.com" target="_blank">Instagram</a>
+                    <a href="https://tiktok.com" target="_blank">TikTok</a>
+                    <a href="https://wa.me/1234567890" target="_blank">WhatsApp</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Arena Roja. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
